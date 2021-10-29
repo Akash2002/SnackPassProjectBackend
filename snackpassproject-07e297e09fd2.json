@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "snackpassproject",
+  "private_key_id": "07e297e09fd24872ba39032b40deb3ff8e40090c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDDHVavenQRasle\nRkQtukh2cgerzbMM6fVPjo1up6ZGJlE89ZX3lR0huQiN+Zo7Q8X4Qjml/K8CCRsu\nL1pLuKDC5uWwEQq/1mQIbrWZc68RU71/0CEzeQTv4Gojat9O38vLSPbJd6AMQwST\nj+AUS5L/LPEWFLndTYdCXa6hjGVfjmfwQPVSKOp2B+QRfcdLVuDTOqr3y0K6kWia\nFnWYnxlHGB4bWpr2utj2KJ8rMOX1lfTcWnDBzTZYjjt2N0V0MPHqyfMK5g1RnPZ3\nR9FB0V+t6ZHNuLCH3733vs0wSRd/NaUyI9TIbp7k50zkvo0Q1REo0Ml0mGzUpFt3\nylPhamL9AgMBAAECggEALorED83E/Bad/DgEsWe7O03OGKRTrqPsWVLm19tz5U3k\nmQb4A/v03AN4T+2XZcWv5p1dhQO2d2TWr/ipsGBVMMjFR295QfORHxXRic43l4mD\nLYbnNJEMpW/BwbsPk4/82/wGql43tlUSNWTfjdfNM8NzqtG82FZTCniwXGbSE63I\n1PI14+PQcPHKyXqnk5/ZEF5h6/NB+0c/2GlAlPO4NF4D8qqrnWuG9zuT3l+g9u5f\nDTmnNkG9Er2BvBV62G63Tbumm1pTgCjLcpNEzoTlS4np1mAd+uM3KvHAcpt0hQcY\nqbBnsMrl9LrYiUFvvDZ1ZAGFcMIu11ZAwf9Vy6WwQQKBgQDowrr3jNEvRYHxhQf5\nM/rT25dSihPpVBhnU9GPj9VfAl8eBrvGBgy289n1KAhvAgDNvTtb2L12exQM7gtq\n2pwjBoSNPcBddoomDmIYgE3jxLaYSSKysjofBDKBzgCG5UkOict9+6JSrFI0wqXS\nITZndsHYm9O8q81rXKjRdmtvDQKBgQDWmGPVncBVTe4VmruD31TmTQvEmbbssK7l\nJZDAI0dgCZIBO2d2EyHWLW6Hhq3KFNHTIzyM9iV9qsTUll2OGDA3ktouUhoYbCgX\nq53C0GM18nsN0aZ52NZFnqh8osnhibwnjXSIGo5iuip34TeEOxeBSg7qyH9DFuPw\nSDHwBS5HsQKBgQCH+7xfg9VyWJliEOZnoQaZX2E4x5J6brcTJtT3moB90VTgpe5t\n8nrbJ/veTlUfBXyStktHjYii/6TnKOtisfUmQViPa9RGxkpPkXed+NeIihRjQ9cR\nry5lkH4xd7i3Fp1n8PkB0VE0G5irWkymRuER8T+u3NsHDxgj8S5vsU9ywQKBgQCe\n6RxM7NOnl9ztzLZ9Uh2ZqYZEYRvvrGrnL2lAjx9kw9GF7gqQilxtMRl/bME3OzGi\nK57EN+bNZ274ihzfg5P5I1tEH/JJEZai6KgbwpslMNnlAtJHusX5qiLUoOvkg018\n8KhRvXChNYELYxDsb6HZURE41Z4//SxwG9Y3Cm8aEQKBgQCGYJrAX38gjxcb+LnI\nuZbw+Yuxw7P7U+3CNguX/p4p3IWn8LceXe3H/EfSTEfn7j9l3YOChK0s8eE8CBa2\ndNnjzZ6Ydda3Ze1cuvjJniFxiKc3+69xESjzS4RNyNw8HJwZ36nwvrqCSjWyrqob\nBNi+8hRijCLsiZRUjjgqD12uWQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "snackpassproject@appspot.gserviceaccount.com",
+  "client_id": "104051320743301143192",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/snackpassproject%40appspot.gserviceaccount.com"
+}
