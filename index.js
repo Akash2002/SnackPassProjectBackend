@@ -1,5 +1,6 @@
 const express = require('express');
 const helpers = require('./helpers.js');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -7,6 +8,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Listening to port 3000");
 });
+
+app.use(cors());
 
 app.get("/trending", (req, res) => {
     helpers.trending().then(data => {
