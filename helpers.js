@@ -19,11 +19,12 @@ class TrendingItem {
 }
 
 class Dish {
-    constructor(name, price, quantity, picked) {
+    constructor(name, price, quantity, picked, inventory) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.picked = picked;
+        this.inventory = inventory;
     }
 }
 
@@ -61,7 +62,7 @@ async function getAvailableFood(restaurant) {
             const dishData = dishSnapshot.data();
             for (const dishName of Object.keys(dishData)) {
                 if (dishData[dishName]["quantity"] > 0)
-                    dishesArray.push(new Dish(dishName, dishData[dishName]["price"], dishData[dishName]["quantity"], false));
+                    dishesArray.push(new Dish(dishName, dishData[dishName]["price"], 0, false, dishData[dishName]["quantity"]));
             }
             resolve(dishesArray);
         });
