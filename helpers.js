@@ -126,7 +126,7 @@ function moveToTrending(dishName, quantity) {
         trendingRef.get().then(doc => {
             if (doc.exists) {
                 trendingRef.update({
-                    "timestamps": FieldValue.arrayUnion(...timestampUnion)
+                    "timestamps": FieldValue.arrayUnion.apply(null, timestampUnion)
                 }).then((res) => resolve(res));
             } else {
                 trendingRef.set({
