@@ -80,7 +80,7 @@ async function order(restaurant, dishName, quantity) {
                 // update with quantity - 1
                 dish[dishName].inventory = dish[dishName].inventory - quantity;
                 restRef.update(dish);
-                
+                console.log(dish);
                 // move to trending list
                 moveToTrending(dishName);
                 resolve(true);
