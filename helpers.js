@@ -70,6 +70,26 @@ async function getAvailableFood(restaurant) {
 };
 
 // perform the order action where the quantity of the dish will decrease by 1 and removed if quantity is 0
+
+// async function order(restName, orders) {
+//     const restRef = db.collection("available_food").doc(restaurant);
+//     return new Promise((resolve, reject) => {
+//         restRef.get().then(dishSnapshot => {
+//             let dish = dishSnapshot.data();
+//             const inventory = dishSnapshot.data()[dishName]["inventory"];
+//             if (inventory > 0) {
+//                 // update with quantity - 1
+//                 dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
+//                 restRef.update(dish).then(() => {
+//                     moveToTrending(dishName);
+//                     resolve(dish[dishName]);
+//                 });
+//                 // move to trending list
+//             }
+//         });
+//     });
+// }
+
 async function order(restaurant, dishName, quantity) {
     const restRef = db.collection("available_food").doc(restaurant);
     return new Promise((resolve, reject) => {
@@ -79,10 +99,10 @@ async function order(restaurant, dishName, quantity) {
             if (inventory > 0) {
                 // update with quantity - 1
                 dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
-                restRef.update(dish);
-                // move to trending list
-                moveToTrending(dishName);
-                resolve(dish[dishName]);
+                restRef.update(dish).then(() => {
+                    moveToTrending(dishName);
+                    resolve(dish[dishName]);
+                });
             }
         });
     });
