@@ -20,7 +20,8 @@ app.get("/trending", (req, res) => {
 app.get("/order", (req, res) => {
     const restaurant = req.query.restaurant;
     const dish = req.query.dish;
-    helpers.order(restaurant, dish).then(data => {
+    const quantity = req.query.quantity;
+    helpers.order(restaurant, dish, quantity).then(data => {
         res.json(data);
     })
 });

@@ -62,7 +62,7 @@ async function getAvailableFood(restaurant) {
             const dishData = dishSnapshot.data();
             for (const dishName of Object.keys(dishData)) {
                 if (dishData[dishName]["quantity"] > 0)
-                    dishesArray.push(new Dish(dishName, dishData[dishName]["price"], 0, false, dishData[dishName]["quantity"]));
+                    dishesArray.push(new Dish(dishName, dishData[dishName]["price"], 0, false, dishData[dishName]["inventory"]));
             }
             resolve(dishesArray);
         });
@@ -70,16 +70,15 @@ async function getAvailableFood(restaurant) {
 };
 
 // perform the order action where the quantity of the dish will decrease by 1 and removed if quantity is 0
-async function order(restaurant, dishName) {
+async function order(restaurant, dishName, quantity) {
     const restRef = db.collection("available_food").doc(restaurant);
     return new Promise((resolve, reject) => {
         restRef.get().then(dishSnapshot => {
             let dish = dishSnapshot.data();
-            const quantity = dishSnapshot.data()[dishName]["quantity"];
-            console.log(quantity)
-            if (quantity > 0) {
+            const inventory = dishSnapshot.data()[dishName]["inventory"];
+            if (inventory > 0) {
                 // update with quantity - 1
-                dish[dishName].quantity = dish[dishName].quantity - 1;
+                dish[dishName].inventory = dish[dishName].inventory - quantity;
                 restRef.update(dish);
                 
                 // move to trending list
