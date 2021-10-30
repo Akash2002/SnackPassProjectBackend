@@ -78,12 +78,11 @@ async function order(restaurant, dishName, quantity) {
             const inventory = dishSnapshot.data()[dishName]["inventory"];
             if (inventory > 0) {
                 // update with quantity - 1
-                dish[dishName].inventory = dish[dishName].inventory - quantity;
+                dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
                 restRef.update(dish);
-                console.log(dish);
                 // move to trending list
                 moveToTrending(dishName);
-                resolve(true);
+                resolve(dish);
             }
         });
     });
