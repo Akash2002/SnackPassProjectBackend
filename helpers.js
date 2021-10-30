@@ -100,8 +100,7 @@ async function order(restaurant, dishName, quantity) {
                 // update with quantity - 1
                 dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
                 restRef.update(dish).then(() => {
-                    moveToTrending(dishName);
-                    resolve(dish[dishName]);
+                    moveToTrending(dishName).then(res => resolve(dish[dishName]));
                 });
             }
         });
@@ -112,17 +111,19 @@ async function order(restaurant, dishName, quantity) {
 function moveToTrending(dishName) {
     // check if food exists in trending
     const trendingRef = db.collection("trending").doc(dishName);
-    trendingRef.get().then(doc => {
-        if (doc.exists) {
-            trendingRef.update({
-                "timestamps": FieldValue.arrayUnion(new Date().getTime() / 1000 | 0)
-            })
-        } else {
-            trendingRef.set({
-                "timestamps": [new Date().getTime()/1000 | 0]
-            });
-        }
-    });
+    return new Promise((resolve, reject) => {
+        trendingRef.get().then(doc => {
+            if (doc.exists) {
+                trendingRef.update({
+                    "timestamps": FieldValue.arrayUnion(new Date().getTime() / 1000 | 0)
+                }).then((res) => resolve(res));
+            } else {
+                trendingRef.set({
+                    "timestamps": [new Date().getTime()/1000 | 0]
+                }).then((res) => resolve(res));
+            }
+        });
+    })
 }
 
 
