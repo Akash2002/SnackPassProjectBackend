@@ -83,6 +83,7 @@ async function order(restaurant, dishName, quantity) {
                 
                 // move to trending list
                 moveToTrending(dishName);
+                resolve(true);
             }
         });
     });
