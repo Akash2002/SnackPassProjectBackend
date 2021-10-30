@@ -82,7 +82,7 @@ async function order(restaurant, dishName, quantity) {
                 restRef.update(dish);
                 // move to trending list
                 moveToTrending(dishName);
-                resolve(dish);
+                resolve(dish[dishName]);
             }
         });
     });
