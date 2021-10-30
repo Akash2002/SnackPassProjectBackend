@@ -114,23 +114,6 @@ async function order(restName, dishes) {
     });
 }
 
-// async function order(restaurant, dishName, quantity) {
-//     const restRef = db.collection("available_food").doc(restaurant);
-//     return new Promise((resolve, reject) => {
-//         restRef.get().then(dishSnapshot => {
-//             let dish = dishSnapshot.data();
-//             const inventory = dishSnapshot.data()[dishName]["inventory"];
-//             if (inventory > 0) {
-//                 // update with quantity - 1
-//                 dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
-//                 restRef.update(dish).then(() => {
-//                     moveToTrending(dishName).then(res => resolve(dish[dishName]));
-//                 });
-//             }
-//         });
-//     });
-// }
-
 // move item to trending after it has been ordered
 function moveToTrending(dishName) {
     // check if food exists in trending
@@ -157,19 +140,20 @@ async function trending() {
         trendingRef.get().then(snapshot => {
             let trendingItems = []
             snapshot.forEach(trendingDishSnapshot => {
+                console.log(trendingDishSnapshot)
                 const trendingDishData = trendingDishSnapshot.data();
 
 
                 // cleanse trending items if their timestamp is greater than 48 hours ago
                 let timestamps = trendingDishData["timestamps"];
-                
-                const filteredTimestamps = cleanse(trendingDishSnapshot.id, timestamps); // edits local array and edits array on firestore
-                if (filteredTimestamps.length > 0) {
-                    const [sortedTimestamps, trendingScore] = getTrendingScore(filteredTimestamps);
-                    trendingItems.push(new TrendingItem(trendingDishSnapshot.id, sortedTimestamps.length, sortedTimestamps[0], trendingScore));
+                if (timestamps !== undefined && timestamps.length > 0) {
+                    const filteredTimestamps = cleanse(trendingDishSnapshot.id, timestamps); // edits local array and edits array on firestore
+                    if (filteredTimestamps.length > 0) {
+                        const [sortedTimestamps, trendingScore] = getTrendingScore(filteredTimestamps);
+                        trendingItems.push(new TrendingItem(trendingDishSnapshot.id, sortedTimestamps.length, sortedTimestamps[0], trendingScore));
+                    }
                 }
             });
-
             resolve(trendingItems.sort((a, b) => b.trendingScore - a.trendingScore)); // return items with greatest trending score first
         });
     });
