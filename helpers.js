@@ -90,22 +90,46 @@ async function getAvailableFood(restaurant) {
 //     });
 // }
 
-async function order(restaurant, dishName, quantity) {
-    const restRef = db.collection("available_food").doc(restaurant);
+async function order(restName, dishes) {
+    const restRef = db.collection("available_food").doc(restName);
+    const batch = db.batch();
+    let trendingMoves = [];
     return new Promise((resolve, reject) => {
         restRef.get().then(dishSnapshot => {
-            let dish = dishSnapshot.data();
-            const inventory = dishSnapshot.data()[dishName]["inventory"];
-            if (inventory > 0) {
-                // update with quantity - 1
-                dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
-                restRef.update(dish).then(() => {
-                    moveToTrending(dishName).then(res => resolve(dish[dishName]));
-                });
+            let dishData = dishSnapshot.data();
+            for (let dish of dishes) {
+                const inventory = dishSnapshot.data()[dish.name]["inventory"];
+                if (inventory > 0) {
+                    dishData[dish.name]["inventory"] = dishData[dish.name]["inventory"] - dish.quantity;
+                    batch.update(restRef, dishData);
+                    trendingMoves.push(moveToTrending(dish.name));
+                }
             }
+            batch.commit().then(res => {
+                Promise.all(trendingMoves).then(results => {
+                    resolve(res);
+                });
+            });
         });
     });
 }
+
+// async function order(restaurant, dishName, quantity) {
+//     const restRef = db.collection("available_food").doc(restaurant);
+//     return new Promise((resolve, reject) => {
+//         restRef.get().then(dishSnapshot => {
+//             let dish = dishSnapshot.data();
+//             const inventory = dishSnapshot.data()[dishName]["inventory"];
+//             if (inventory > 0) {
+//                 // update with quantity - 1
+//                 dish[dishName]["inventory"] = dish[dishName]["inventory"] - quantity;
+//                 restRef.update(dish).then(() => {
+//                     moveToTrending(dishName).then(res => resolve(dish[dishName]));
+//                 });
+//             }
+//         });
+//     });
+// }
 
 // move item to trending after it has been ordered
 function moveToTrending(dishName) {

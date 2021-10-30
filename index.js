@@ -1,6 +1,7 @@
 const express = require('express');
 const helpers = require('./helpers.js');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,6 +11,8 @@ app.listen(PORT, () => {
 });
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));  // allows any type of value in body (we pass in an array of objects)
 
 app.get("/trending", (req, res) => {
     helpers.trending().then(data => {
@@ -17,11 +20,10 @@ app.get("/trending", (req, res) => {
     });
 });
 
-app.get("/order", (req, res) => {
-    const restaurant = req.query.restaurant;
-    const dish = req.query.dish;
-    const quantity = req.query.quantity;
-    helpers.order(restaurant, dish, quantity).then(data => {
+app.post("/order", (req, res) => {
+    const restName = req.body.restName;
+    const dishes = req.body.dishes;
+    helpers.order(restName, dishes).then(data => {
         res.json(data);
     })
 });
