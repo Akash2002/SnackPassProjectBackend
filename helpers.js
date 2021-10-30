@@ -26,16 +26,27 @@ class Dish {
     }
 }
 
+class Restaurant {
+    constructor(name, address, phone) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+}
+
 // Get restaurants 
 async function getRestaurants() {
     const restArray = [];
     const restRef = db.collection("available_food");
     return new Promise((resolve, reject) => {
         restRef.get().then(data => {
+            let counter = 0;
             data.forEach(rest => {
-                restArray.push(rest.id);
+                restRef.doc(rest.id).collection("informationCollection").doc("information").get().then(info => {
+                    restArray.push(new Restaurant(rest.id, info.data()["address"], info.data()["phone"]));
+                    if (++counter == data.size) resolve(restArray);
+                });
             });
-            resolve(restArray);
         });
     });
 }
