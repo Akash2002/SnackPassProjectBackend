@@ -61,7 +61,7 @@ async function getAvailableFood(restaurant) {
         dishesRef.get().then(dishSnapshot => {
             const dishData = dishSnapshot.data();
             for (const dishName of Object.keys(dishData)) {
-                if (dishData[dishName]["quantity"] > 0)
+                if (dishData[dishName]["inventory"] > 0)
                     dishesArray.push(new Dish(dishName, dishData[dishName]["price"], 0, false, dishData[dishName]["inventory"]));
             }
             resolve(dishesArray);
