@@ -120,17 +120,18 @@ function moveToTrending(dishName, quantity) {
     const trendingRef = db.collection("trending").doc(dishName);
     let timestampUnion = [];
     for (let i = 0; i < quantity; i++) {
-        timestampUnion.push(new Date().getTime() / 1000 | 0);
+        timestampUnion.push(new Date().getTime() / 1000 | 0 + i);  // to allow for elements to not be duplicate
     }
+    console.log(timestampUnion)
     return new Promise((resolve, reject) => {
         trendingRef.get().then(doc => {
             if (doc.exists) {
                 trendingRef.update({
-                    "timestamps": FieldValue.arrayUnion.apply(null, timestampUnion)
+                    "timestamps": FieldValue.arrayUnion.apply(this, timestampUnion)
                 }).then((res) => resolve(res));
             } else {
                 trendingRef.set({
-                    "timestamps": [new Date().getTime()/1000 | 0]
+                    "timestamps": FieldValue.arrayUnion.apply(this, timestampUnion)
                 }).then((res) => resolve(res));
             }
         });
