@@ -102,7 +102,7 @@ async function order(restName, dishes) {
                 if (inventory > 0) {
                     dishData[dish.name]["inventory"] = dishData[dish.name]["inventory"] - dish.quantity;
                     batch.update(restRef, dishData);
-                    trendingMoves.push(moveToTrending(dish.name));
+                    trendingMoves.push(moveToTrending(dish.name, dish.quantity));
                 }
             }
             batch.commit().then(res => {
@@ -115,14 +115,18 @@ async function order(restName, dishes) {
 }
 
 // move item to trending after it has been ordered
-function moveToTrending(dishName) {
+function moveToTrending(dishName, quantity) {
     // check if food exists in trending
     const trendingRef = db.collection("trending").doc(dishName);
+    let timestampUnion = [];
+    for (let i = 0; i < quantity; i++) {
+        timestampUnion.push(new Date().getTime() / 1000 | 0);
+    }
     return new Promise((resolve, reject) => {
         trendingRef.get().then(doc => {
             if (doc.exists) {
                 trendingRef.update({
-                    "timestamps": FieldValue.arrayUnion(new Date().getTime() / 1000 | 0)
+                    "timestamps": FieldValue.arrayUnion(...timestampUnion)
                 }).then((res) => resolve(res));
             } else {
                 trendingRef.set({
