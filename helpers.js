@@ -145,9 +145,7 @@ async function trending() {
         trendingRef.get().then(snapshot => {
             let trendingItems = []
             snapshot.forEach(trendingDishSnapshot => {
-                console.log(trendingDishSnapshot)
                 const trendingDishData = trendingDishSnapshot.data();
-
 
                 // cleanse trending items if their timestamp is greater than 48 hours ago
                 let timestamps = trendingDishData["timestamps"];
